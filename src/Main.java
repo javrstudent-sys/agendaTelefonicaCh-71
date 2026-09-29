@@ -18,65 +18,76 @@ public class Main {
 
 
         try {
-// Capacidad máxima fija de la agenda
-            public static final int MAX_CAPACIDAD = 20;
+            do {
+                //monstremos un menu y que el usuario pueda elegir entre opcion 1 al 7.
+                System.out.println("Elija la opcion que desea realizar...");
+                System.out.println("1. Consultar lista de contactos."); //listarContactos()
+                System.out.println("2. Buscar contacto"); //buscarContacto(String nombre)
+                System.out.println("3. Existencia de contacto"); //existeContacto()
+                System.out.println("4. Eliminar contacto"); //eliminarContacto()
+                System.out.println("5. Añadir contacto"); //anadirContacto()
+                System.out.println("6. Espacio Libre"); //espacioLibre()
+                System.out.println("7. Estado de agenda"); //agendaLlena()
+                System.out.println("8. Salir");
+                System.out.println("Elija la opción que le convenga, escriba el numero....");
 
-    public Agenda(String nombre, String apellido, Integer numero) throws InvalidData {
-                super(nombre, apellido, numero);
-            }
+                option = scan.nextInt(); //pedimos datos asignando lo que se pida con instancia scanner
 
-            @Override
-            public void showDetails() {
-                System.out.println("----- Detalles de los contactos -----");
-                System.out.println("Nombre " + this.getNombre());
-                System.out.println("Apellido " + this.getApellido());
-                System.out.println("Numero " + this.getNumero());
-            }
-            //metodo para delimitar el tamaño
-            public static void espacioLibre(ArrayList<Contactos> contactos) {
-                int disponibles = MAX_CAPACIDAD - contactos.size();
-                System.out.println("Contactos guardados: " + contactos.size());
-                System.out.println("Capacidad máxima: " + MAX_CAPACIDAD);
-                System.out.println("Espacio libre disponible: " + disponibles + " contacto(s).");
-            }
+                switch (option) {
+                    case 1:
+                        System.out.println("Ha elegido consultar lista de contactos" );
+                        System.out.println("procesando...");
+                        for (Contactos agenda: contactos){
+                            agenda.showDetails();
+                            System.out.println("-----------------------------------");
+                        }
+                        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
+                        break;
+                    case 2:
+                        System.out.println("Ha elegido buscar contacto: ");
+                        System.out.println("Ingrese el nombre del contacto:");
+                        String nom = scan.next();
 
-            //Metodo para Verificar si la agenda está llena o cuánto le falta
-            public static void agendaLlena(ArrayList<Contactos> contactos) {
-                if (contactos.size() >= MAX_CAPACIDAD) {
-                    System.out.println("El estado de la agenda es: LLENA.");
-                } else {
-                    System.out.println("El estado de la agenda es: DISPONIBLE.");
-                    System.out.println("Aún puedes agregar " + (MAX_CAPACIDAD - contactos.size()) + " contacto(s).");
+                        for (Contactos agen : contactos) {
+                            // Usamos .equals() y accedemos al nombre del objeto
+                            if (agen.getNombre().equals(nom)) {
+                                System.out.println("¡Contacto encontrado!");
+                                agen.showDetails(); // O muestra los datos que necesites
+                            }
+                        }
+                        System.out.println("-----------------------------------");
+                        break;
+                    case 3:
+                        System.out.println("Ha elegido existencia de contacto : " );
+                        Agenda.existeContacto(contactos);
+                        System.out.println("-----------------------------------");
+                        break;
+                    case 4:
+                        System.out.println("Ha elegido eliminar contacto: " );
+                        contactos = Agenda.eliminarContacto(contactos);
+                        System.out.println("-----------------------------------");
+                        break;
+                    case 5:
+                        System.out.println("Ha elegido añadir contacto: " );
+                        contactos = Agenda.guardarContacto(contactos);// Actualiza y guarda la lista
+                        break;
+                    case 6:
+                        System.out.println("Ha elegido ver el espacio de agenda: " );
+                        Agenda.espacioLibre(contactos);
+                        System.out.println("-----------------------------------");
+                        break;
+                    case 7:
+                        System.out.println("Ha elegido ver el estado de la agenda: " );
+                        Agenda.agendaLlena(contactos);
+                        System.out.println("-----------------------------------");
+                        break;
+
+                    default:
+                        System.out.println("Fuera de rango...");
+                        break;
                 }
-            }
-            // Método estático para poder invocarlo directamente como Agenda.guardarContacto(...)
-            public static ArrayList<Contactos> guardarContacto(ArrayList<Contactos> contactos) {
-                Scanner scan = new Scanner(System.in);
-                if (contactos.size() >= MAX_CAPACIDAD) {
-                    System.out.println("Error: La agenda está llena (" + MAX_CAPACIDAD + " contactos max). No se pueden agregar más.");
-                    return contactos;
-                }
-                System.out.println("Ingrese el nombre: ");
-                String nomb = scan.next();
 
-                System.out.println("Ingrese el apellido: ");
-                String ape = scan.next();
-
-                System.out.println("Ingrese el número: ");
-                Integer num = scan.nextInt();
-
-                try {
-                    contactos.add(new Agenda(nomb, ape, num));
-                    System.out.println("¡Contacto agregado con éxito!");
-                    System.out.println("Nombre: "+nomb);
-                    System.out.println("Apellido: "+ape);
-                    System.out.println("Numero: "+ num);
-                } catch (InvalidData e) {
-                    System.out.println("Error al validar los datos: " + e.getMessage());
-                }
-
-                return contactos;
-            }
+            }while(option !=8);
 
 
         }catch (Exception e){
