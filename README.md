@@ -5,14 +5,14 @@ Plan de respaldo: 5 integrantes tomaron la decisión de crear un proyecto de res
 
 Integrantes del equipo de respaldo:
 
-Andres
+Andrés Carrizosa
 
 Diego antonio
 
-Lizbeth
+Lizbeth Torres
 
 Brenfer
 
-Jaime
+Jaime Velazquez
 
 Resolución: Como el proyecto principal se logró corregir exitosamente, no se volvió a hablar ni comentar sobre el desarrollo paralelo.
