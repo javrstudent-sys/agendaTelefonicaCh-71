@@ -65,4 +65,70 @@ public class Agenda extends Contactos{
         return contactos;
     }
 
+    //metodo para veridicar si existe contacto
+    public static ArrayList<Contactos> existeContacto(ArrayList<Contactos> contactos) {
+        // 1. Validar primero si la agenda está vacía
+        if (contactos.isEmpty()) {
+            System.out.println("La agenda está vacía.");
+            return contactos;
+        }
+
+        System.out.println("BUSCAR PERSONA------->");
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Ingrese el nombre: ");
+        String nomb = scan.next();
+
+        System.out.println("Ingrese el apellido: ");
+        String ape = scan.next();
+
+        boolean encontrado = false;
+
+        // 2. Recorrer y comparar nombre y apellido
+        for (Contactos contacto : contactos) {
+            boolean mismoNombre = contacto.getNombre().equalsIgnoreCase(nomb);
+            boolean mismoApellido = contacto.getApellido().equalsIgnoreCase(ape);
+
+            if (mismoNombre && mismoApellido) {
+                System.out.println("¡El contacto existe en la agenda!");
+                contacto.showDetails();
+                encontrado = true;
+                break; // Detener la búsqueda al encontrarlo
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("El contacto " + nomb + " " + ape + " NO existe en la agenda.");
+        }
+
+        return contactos; // 3. Retornar la lista completa
+    }
+
+    public static ArrayList<Contactos> eliminarContacto(ArrayList<Contactos> contactos) {
+        if (contactos.isEmpty()) {
+            System.out.println("La agenda está vacía, no hay contactos para eliminar.");
+            return contactos;
+        }
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Ingrese el nombre del contacto a eliminar: ");
+        String nomb = scan.next();
+
+        System.out.println("Ingrese el apellido del contacto a eliminar: ");
+        String ape = scan.next();
+
+        // removeIf elimina los elementos que cumplan la condición y devuelve true si borró algo
+        boolean eliminado = contactos.removeIf(c ->
+                c.getNombre().equalsIgnoreCase(nomb) && c.getApellido().equalsIgnoreCase(ape)
+        );
+
+        if (eliminado) {
+            System.out.println("¡Contacto " + nomb + " " + ape + " eliminado con éxito!");
+        } else {
+            System.out.println("No se encontró ningún contacto con ese nombre y apellido.");
+        }
+
+        return contactos;
+    }
 }
